@@ -1,14 +1,17 @@
 # 定义一个函数用来按层级打印多级列表
 
-def print_lol(the_list, indence=False, level=0):
+import sys
+
+def print_lol(the_list, indent=False, level=0, fh=sys.stdout):
     # 遍历列表，如果发现下一层级就递归
 
-    for each_iterm in the_list:
-        if isinstance(each_iterm, list):
-            print_lol(each_iterm, indence, level+1)
+    for each_item in the_list:
+        if isinstance(each_item, list):
+            print_lol(each_item, indent, level+1, fh)
 
         else:
             # 如果需要缩进就执行
-            if indence:
-                    print('\t'*level, end='')
-            print(each_iterm)
+            if indent:
+                for tab_stop in range(level):
+                    print('\t', end='', file=fh)
+            print(each_item, file=fh)
